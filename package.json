@@ -1,7 +1,7 @@
 {
-  "name": "growi-plugin-script-template",
+  "name": "growi-plugin-script-template-stencil",
   "version": "1.0.0",
-  "description": "GROWI plugin template for script",
+  "description": "GROWI script plugin template with stencil",
   "license": "MIT",
   "keywords": [
     "growi",
