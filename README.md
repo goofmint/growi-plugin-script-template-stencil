@@ -1,6 +1,6 @@
-# GROIW Plugin template for script
+# GROIW Plugin template for script with Stencil
 
-This is a template for creating a GROWI script plugin.
+This is a template for creating a GROWI script plugin with Stencil.
 
 ## Usage
 
@@ -29,6 +29,32 @@ Of course, you can add or remove files as you like.
 - src/Hello.tsx
 - src/Hello.css
 - src/Demo.tsx
+
+#### Stencil components
+
+You will edit or add Stencil components in `src/` directory.
+
+- growi-component/src/*
+
+You can use dev server when you develop the plugin.
+
+```bash
+pnpm run start
+```
+
+After developing, you can build the plugin.
+
+```bash
+pnpm run build
+```
+
+### Load Stencil components in the plugin
+
+You need to load the Stencil components in the plugin like below.
+
+```tsx
+import '../growi-component/dist/components/growi-component';
+```
 
 ### Preview the plugin
 

@@ -3,11 +3,29 @@ import type { Plugin } from 'unified';
 import { Node } from 'unist';
 import { visit } from 'unist-util-visit';
 
-import './Hello.css';
+import '../growi-component/dist/components/growi-component';
+
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'growi-component': any;
+    }
+  }
+}
 
 export const helloGROWI = (Tag: React.FunctionComponent<any>): React.FunctionComponent<any> => {
   return ({ children, ...props }) => {
     try {
+      const { stencil, params1, params2 } = JSON.parse(props.title || '{}');
+      if (stencil) {
+        return (
+          <growi-component
+            name={children}
+            params-1={params1}
+            params-2={params2}>
+          </growi-component>
+        );
+      }
       // your code here
       // return <>Hello, GROWI!</>;
     }
@@ -52,23 +70,12 @@ export const remarkPlugin: Plugin = () => {
       // Render your component
       const { value } = n.children[0];
       data.hName = 'a'; // Tag name
-      data.hChildren = [{ type: 'text', value: `${value}, growi!` }]; // Children
+      data.hChildren = [{ type: 'text', value }]; // Children
       // Set properties
       data.hProperties = {
-        href: 'https://example.com/rss',
-        title: JSON.stringify(n.attributes), // Pass to attributes to the component
+        href: 'https://example.com/',
+        title: JSON.stringify({ ...n.attributes, ...{ stencil: true } }), // Pass to attributes to the component
       };
-    });
-  };
-};
-
-export const rehypePlugin: Plugin = () => {
-  return (tree: Node) => {
-    // node type is 'element' or 'text' (2nd argument)
-    visit(tree, 'text', (node: Node) => {
-      const n = node as unknown as GrowiNode;
-      const { value } = n;
-      n.value = `${value} 😄`;
     });
   };
 };
